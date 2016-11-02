@@ -10,10 +10,10 @@ const PORT = process.env.PORT || 3000;
 // redirect all https traffic to http because openweathermap only operates on http
 // this is a common pattern for express middleware
 app.use(function(req, res, next) {
-    if (req.headers['x-forwarded-proto'] === 'http') {
-        next();
-    } else {
+    if (req.headers['x-forwarded-proto'] === 'https') {
         res.redirect('http://' + req.hostname + req.url);
+    } else {
+        next();
     }
 });
 
