@@ -20,14 +20,16 @@ module.exports = {
 
       if (res.data.cod && res.data.message) {
         // something went wrong
-        console.log(res);
+        console.log('res', res);
         throw new Error(res.data.message);
       } else {
         return res.data.main.temp;
       }
 
-    }, function (res) {
-      throw new Error(res.data.message);
+    }, function (error) {      
+      //throw new Error(error.message);
+      console.log('error.config: ', error.config);
+      throw new Error(error.message);      
     });
   }
 };
