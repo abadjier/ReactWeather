@@ -17,7 +17,9 @@ var Weather = React.createClass({
     // set errorMessage to undefined to clear old error when a new serch starts
     this.setState({ 
       isLoading: true,
-      errorMessage: undefined
+      errorMessage: undefined,
+      location: undefined,
+      temp: undefined
    });
 
     openWeatherMap.getTemp(location).then(function (temp) {
@@ -34,6 +36,28 @@ var Weather = React.createClass({
       });
     });
   
+  },
+  componentDidMount: function () {
+    // pull location off the query in the URL string
+    var location = this.props.location.query.location;
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      //remove location from search link
+      window.location.hash = '#/';
+    }
+  },
+  componentWillReceiveProps: function (newProps) {
+    // gets called everytime thecomponent's props are updated
+
+    // pull location off the query in the URL string
+    var location = newProps.location.query.location;
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      //remove location from search link
+      window.location.hash = '#/';
+    }
   },
   render: function () {
     var {isLoading, temp, location, errorMessage} = this.state;
